@@ -6,6 +6,7 @@
 
 # Ignora dependencias locales
 target/
+build/
 .mvn/
 .settings/
 
