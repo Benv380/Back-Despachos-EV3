@@ -1,0 +1,32 @@
+{
+  "family": "back-despachos",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "512",
+  "memory": "1024",
+  "executionRoleArn": "arn:aws:iam::423113821498:role/LabRole",
+  "taskRoleArn": "arn:aws:iam::423113821498:role/LabRole",
+  "containerDefinitions": [
+    {
+      "name": "despachos",
+      "image": "423113821498.dkr.ecr.us-east-1.amazonaws.com/back-despachos:latest",
+      "essential": true,
+      "portMappings": [{ "containerPort": 8081, "protocol": "tcp" }],
+      "environment": [
+        { "name": "DB_ENDPOINT", "value": "innovatech-db.cfbvlhfta5ln.us-east-1.rds.amazonaws.com" },
+        { "name": "DB_PORT", "value": "3306" },
+        { "name": "DB_NAME", "value": "innovatech" },
+        { "name": "DB_USERNAME", "value": "admin" },
+        { "name": "SPRING_DATASOURCE_HIKARI_MAXIMUM_POOL_SIZE", "value": "3" },
+        { "name": "SPRING_DATASOURCE_URL", "value": "jdbc:mysql://innovatech-db.cfbvlhfta5ln.us-east-1.rds.amazonaws.com:3306/innovatech?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&createDatabaseIfNotExist=true" }
+      ],
+      "secrets": [
+        { "name": "DB_PASSWORD", "valueFrom": "arn:aws:ssm:us-east-1:423113821498:parameter/innovatech/DB_PASSWORD" }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": { "awslogs-group": "/ecs/back-despachos", "awslogs-region": "us-east-1", "awslogs-stream-prefix": "ecs" }
+      }
+    }
+  ]
+}
