@@ -1,10 +1,12 @@
-name: Deploy Backend Ventas to ECS
+name: Deploy Backend Despachos to ECS
 on:
   push:
     branches: [ main ]
 
 env:
+  AWS_REGION: us-east-1
   ECR_REPOSITORY: back-despachos
+  ECS_CLUSTER: innovatech-cluster
   ECS_SERVICE: back-despachos-svc
   CONTAINER_NAME: despachos
   APP_DIR: Springboot-API-REST-DESPACHO
